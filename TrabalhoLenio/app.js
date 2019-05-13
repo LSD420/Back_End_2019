@@ -16,12 +16,14 @@ var server = app.listen(port, function () {
     var host = server.address().address
     var port = server.address().port
 });
+
+
+
 app.get('/', function (req, res) {
-    res.send("Nothing to see here");
+    var op = ["GET /photos/:id","DELETE /photos/:id", "GET /dislikes/:id","POST /commments/:id","GET /sort"]
+    // res.send("Nothing to see here");
+   res.send(op);
 })
-// app.get('/lista', function (req, res) {
-//     res.send(readFile("./photos.json"));
-// })
 
 app.get('/photos/:id', function (req, res) {
     var file = readFile('./photos.json');
@@ -51,14 +53,6 @@ app.get('/dislikes/:id', function (req, res) {
     fs.writeFile("photos.json", JSON.stringify(jsonData, null, 0)) //JSON.stringify para converter objeto para string
     res.send(jsonData['photo' + id]);
 })
-// app.get('/dislikes/:id', function (req, res) {
-//     var file = readFile('./photos.json');
-//     var jsonData = JSON.parse(file);
-//     var id = req.params.id;
-//     jsonData['photo'+id].dislikes++;
-//     fs.writeFile("photos.json","utf8", JSON.stringify(jsonData, null,4))
-//     res.send(jsonData['photo'+id]);
-// })
 
 app.post('/comments/:id', function (req, res) {
     var file = readFile('./photos.json');
@@ -74,6 +68,34 @@ app.post('/comments/:id', function (req, res) {
     res.send(jsonData['photo' + id]);
 })
 
+app.get('/sort', function (req, res) {
+    var file = readFile('./photos.json');
+    var jsonData = JSON.parse(file);
+    var guardar = []
+    var key = Object.keys(jsonData);
+    var obj_length = key.length;
+    
+    for (var i = 1; i <= obj_length; i++) {
+        guardar.push(jsonData['photo' + i].likes)
+        guardar.sort()
+    }
+    var teste = []
+    for (i = guardar.length; i >= 0; i--) {
+        for (var j = 1; j <= obj_length; j++) {
+            if (guardar[i] == jsonData['photo' + j].likes) {
+                console.log('true')
+                teste.push('photo'+j,jsonData['photo' + j])
+
+            } else {
+                console.log('false')
+            }
+        }
+    }
+    res.send(teste)
+})
+
+
+
 
 // app.post('/photos', function (req, res) {
 //     var file = readFile('./photos.json');
@@ -84,26 +106,36 @@ app.post('/comments/:id', function (req, res) {
 //     jsonData['photos' + obj_lenght] = req.body;
 //     res.send(jsonData);
 // })
-app.get('/sort', function (req, res) {
-    var file = readFile('./photos.json');
-    var jsonData = JSON.parse(file);
-    var likes = jsonData['photo' + 1].likes;
-    sort(likes);
 
-})
-function swap(arr, i, j){
-    var troca = arr[i];
-    arr[i] = arr[j];
-    arr[j] = troca;
-}
-function sort(arr) {
-    var len = arr.length,i, j, stop;
-    for (i = 0; i < len; i++) {
-        for (j = 0, stop = len - i; j < stop; j++) {
-            if (arr[j] > arr[j + 1]) {
-                swap(arr, j, j + 1);
-            }
-        }
-    }
-    return arr;
-}
+// app.get('/sort', function (req, res) {
+//     var file = readFile('./photos.json');
+//     var jsonData = JSON.parse(file);
+//     var likes = jsonData['photo' + 1].likes;
+
+//     res.send(sort(likes));
+
+// })
+// function swap(arr, i, j) {
+//     var troca = arr[i];
+//     arr[i] = arr[j];
+//     arr[j] = troca;
+// }
+// function sort(arr) {
+//     var len = arr.length, i, j, stop;
+//     for (i = 0; i < len; i++) {
+//         for (j = 0, stop = len - i; j < stop; j++) {
+//             if (arr[j] > arr[j + 1]) {
+//                 swap(arr, j, j + 1);
+//             }
+//         }
+//     }
+//     return arr;
+// }
+
+
+// app.get("/teste", function (req, res) {
+//     var file = readFile('./photos.json');
+//     var jsonData = JSON.parse(file);
+//     var key = Object.keys(jsonData);
+//     var obj_lenght = key.length;
+// })
