@@ -63,15 +63,15 @@ app.get('/ordenar', function (req, res) {
     var key = Object.keys(jsonData);
     var obj_length = key.length;
     
-    for (var i = 1; i <= obj_length; i++) {
-        like.push(jsonData['Photo' + i].likes)
-        like.sort()
+    for (var i = 1; i <= obj_length; i++) { 
+        like.push(jsonData['Photo' + i].likes) //guardar os likes
+        like.sort() //ordena os likes
     }
     var array = [];
     for (i = like.length; i >= 0; i--) {
         for (var j = 1; j <= obj_length; j++) {
-            if (like[i] == jsonData['Photo' + j].likes) {
-                teste.push('Photo'+j,jsonData['Photo' + j])
+            if (like[i] == jsonData['Photo' + j].likes) { //Verifica se a variável like corresponde aos likes do objeto photo
+                teste.push('Photo'+j,jsonData['Photo' + j]) //guarda dentro do array
             }
         }
     }
