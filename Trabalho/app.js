@@ -18,12 +18,7 @@ var server = app.listen(port, function () {
     var port = server.address().port
 });
 
-// app.get('/photos', function(req, res){
-//     res.send(readFile("./photos.json"));
-// })
-
 app.get('/photos/:id', function (req, res) {
-    // res.send(readFile("./photos.json"));
     var file = readFile('./photos.json');
     var jsonData = JSON.parse(file);
     var id = req.params.id;
@@ -36,9 +31,9 @@ app.delete('/photos/:id', function (req, res) {
     var id = req.params.id;
     if (jsonData['Photo' + id]) { 
         delete jsonData['Photo' + id]; 
-        res.send("Foto apagada com sucesso");
+        res.send("Foto eliminada");
     } else{
-        res.send("Erro");
+        res.send("Erro: A foto nao foi encontrada");
     }
     
 })
@@ -47,7 +42,7 @@ app.get('/dislikes/:id', function (req, res) {
     var jsonData = JSON.parse(file);
     var id = req.params.id;
     jsonData['Photo'+id].dislikes++;
-    fs.writeFile("photos.json", JSON.stringify(jsonData, null,4))
+    fs.writeFile("photos.json", JSON.stringify(jsonData))
     res.send(jsonData['Photo'+id]);
 })
 
@@ -58,17 +53,27 @@ app.post('/comments/:id', function (req, res) {
     var comentario = req.body.comments;
     var photo= jsonData['Photo'+id];
     photo.comments.push(comentario);
-    fs.writeFile("photos.json", JSON.stringify(jsonData, null,4))
+    fs.writeFile("photos.json", JSON.stringify(jsonData))
     res.send(jsonData['Photo'+id]);
 })
-
-
-// app.post('/photos', function (req, res) {
-//     var file = readFile('./photos.json');
-//     var jsonData = JSON.parse(file);
-//     var keys = Object.keys(jsonData);
-//     var obj_lenght = keys.length;
-//     obj_lenght++;
-//     jsonData['photos' + obj_lenght] = req.body;
-//     res.send(jsonData);
-// })
+app.get('/ordenar', function (req, res) {
+    var file = readFile('./photos.json');
+    var jsonData = JSON.parse(file);
+    var like = [];
+    var key = Object.keys(jsonData);
+    var obj_length = key.length;
+    
+    for (var i = 1; i <= obj_length; i++) {
+        like.push(jsonData['Photo' + i].likes)
+        like.sort()
+    }
+    var array = [];
+    for (i = like.length; i >= 0; i--) {
+        for (var j = 1; j <= obj_length; j++) {
+            if (like[i] == jsonData['Photo' + j].likes) {
+                teste.push('Photo'+j,jsonData['Photo' + j])
+            }
+        }
+    }
+    res.send(array)
+})

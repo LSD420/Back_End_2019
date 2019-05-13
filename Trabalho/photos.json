@@ -10,8 +10,7 @@
         "dislikes": 28,
         "comments": [
             "Hello World"
-        ]
-        ,
+        ],
         "tags": [
             "esquilo",
             "voador"
@@ -25,6 +24,24 @@
         "size": " ",
         "url": "http://lenoticias.com.br/extranet/uploads/Noticia/share_image_1518815153639.png",
         "likes": 55,
+        "dislikes": 10,
+        "comments": [
+            "Boa foto",
+            "linda"
+        ],
+        "tags": [
+            "esquilo",
+            "voador"
+        ]
+    },
+    "Photo3": {
+        "id": 3,
+        "uploader": "BOT2",
+        "title": "random2",
+        "description": "Adeus",
+        "size": " ",
+        "url": "http://lenoticias.com.br/extranet/uploads/Noticia/share_image_1518815153639.png",
+        "likes": 200,
         "dislikes": 10,
         "comments": [
             "Boa foto",
