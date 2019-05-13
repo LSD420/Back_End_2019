@@ -83,11 +83,7 @@ app.get('/sort', function (req, res) {
     for (i = guardar.length; i >= 0; i--) {
         for (var j = 1; j <= obj_length; j++) {
             if (guardar[i] == jsonData['photo' + j].likes) {
-                console.log('true')
                 teste.push('photo'+j,jsonData['photo' + j])
-
-            } else {
-                console.log('false')
             }
         }
     }
