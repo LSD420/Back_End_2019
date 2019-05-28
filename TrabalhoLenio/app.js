@@ -77,8 +77,10 @@ app.get('/sort', function (req, res) {
     
     for (var i = 1; i <= obj_length; i++) {
         guardar.push(jsonData['photo' + i].likes)
-        guardar.sort()
+      
     }
+    guardar.sort();
+
     var teste = []
     for (i = guardar.length; i >= 0; i--) {
         for (var j = 1; j <= obj_length; j++) {
