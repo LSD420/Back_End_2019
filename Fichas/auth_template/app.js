@@ -6,10 +6,12 @@ var passport = require('passport');
 var flash = require('connect-flash');
 var app = express();
 
+
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs'); // set up ejs for templating
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }})); // Use the session middleware
 app.use(passport.initialize());
